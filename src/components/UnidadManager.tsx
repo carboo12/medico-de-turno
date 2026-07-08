@@ -99,7 +99,7 @@ export default function UnidadManager({ initialUnidades }: { initialUnidades: Un
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">{unidad.nombre}</h3>
-                <p className="text-xs text-gray-500">{unidad._count?.medicos || 0} Médicos asignados</p>
+                <p className="text-xs text-gray-500">{unidad._count?.medicos || 0} Personal asignado</p>
               </div>
             </div>
             

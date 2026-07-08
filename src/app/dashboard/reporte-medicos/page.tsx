@@ -57,11 +57,11 @@ export default function ReporteMedicosPage() {
       'UNIDAD / MUNICIPIO': m.unidad.nombre
     }))
     
-    exportToExcel(
-      dataToExport, 
-      `Catalogo_Medicos_${format(new Date(), 'yyyy-MM-dd')}`, 
-      'SNC SILAIS CHINADEGA - CATÁLOGO GENERAL DE MÉDICOS'
-    )
+      exportToExcel(
+        dataToExport, 
+        `Catalogo_Personal_${format(new Date(), 'yyyy-MM-dd')}`, 
+        'SNC SILAIS CHINADEGA - CATÁLOGO GENERAL DE PERSONAL'
+      )
   }
 
   const handlePrint = () => {
@@ -99,7 +99,7 @@ export default function ReporteMedicosPage() {
         {/* Filters - Not printed */}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-white p-6 shadow-sm lg:flex-row lg:items-end print:hidden">
           <div className="flex-1 space-y-1">
-            <label className="text-[10px] font-bold uppercase text-gray-400">Buscar Médico</label>
+            <label className="text-[10px] font-bold uppercase text-gray-400">Buscar Personal</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
               <input 
@@ -122,6 +122,7 @@ export default function ReporteMedicosPage() {
               <option value="TODOS">Todos los tipos</option>
               <option value="GENERAL">Médico General</option>
               <option value="SOCIAL">Médico Social</option>
+              <option value="ENFERMERIA">Lic. Enfermería</option>
             </select>
           </div>
 
@@ -163,11 +164,11 @@ export default function ReporteMedicosPage() {
             <div className="flex justify-between items-end">
               <div>
                 <h1 className="text-3xl font-black text-blue-900 leading-none">SNC SILAIS CHINADEGA</h1>
-                <p className="text-md font-bold text-gray-500 uppercase tracking-widest mt-1">CATÁLOGO GENERAL DE MÉDICOS</p>
+                <p className="text-md font-bold text-gray-500 uppercase tracking-widest mt-1">CATÁLOGO GENERAL DE PERSONAL</p>
               </div>
               <div className="text-right text-xs font-semibold text-gray-400">
                 <p>FECHA: {format(new Date(), 'dd/MM/yyyy')}</p>
-                <p>MÉDICOS EN LISTA: {filteredMedicos.length}</p>
+                <p>TOTAL EN LISTA: {filteredMedicos.length}</p>
               </div>
             </div>
           </div>
@@ -196,7 +197,9 @@ export default function ReporteMedicosPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-black ${
-                      medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                      medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' :
+                      medico.tipo === 'ENFERMERIA' ? 'bg-emerald-100 text-emerald-700' :
+                      'bg-blue-100 text-blue-700'
                     }`}>
                       <Tag size={10} className="print:hidden" />
                       {medico.tipo || 'GENERAL'}
@@ -215,7 +218,7 @@ export default function ReporteMedicosPage() {
                   <td colSpan={4} className="py-20 text-center">
                     <div className="flex flex-col items-center gap-2 text-gray-400">
                       <Users size={48} className="opacity-20" />
-                      <p className="font-medium">No se encontraron médicos con los filtros seleccionados</p>
+                      <p className="font-medium">No se encontró personal con los filtros seleccionados</p>
                     </div>
                   </td>
                 </tr>
@@ -231,7 +234,7 @@ export default function ReporteMedicosPage() {
           </table>
           
           <div className="hidden print:block mt-8 text-center text-[10px] text-gray-400 pb-8">
-            SNC SILAIS CHINADEGA - Sistema de Gestión de Médicos de Turno
+            SNC SILAIS CHINADEGA - Sistema de Gestión de Personal de Turno
           </div>
         </div>
       </main>

@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { LogOut, Stethoscope } from 'lucide-react'
 import { logout } from '@/app/auth-actions'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardPage() {
   const session = await getSession()
   if (!session) redirect('/login')
@@ -38,7 +40,7 @@ export default async function DashboardPage() {
                 href="/dashboard/medicos" 
                 className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors"
               >
-                Médicos
+                Personal
               </Link>
               <Link 
                 href="/dashboard/unidades" 
@@ -94,7 +96,7 @@ export default async function DashboardPage() {
           {/* Left Column - Form */}
           <div className="lg:col-span-5">
             <div className="sticky top-24">
-              <ReportForm medicos={medicos} />
+              <ReportForm medicos={medicos} unidades={unidades} />
             </div>
           </div>
 

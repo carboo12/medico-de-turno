@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SNC Medic - Control de Médicos",
-  description: "Control diario de médicos por turno",
+  title: "SNC Medic - Control de Personal de Turno",
+  description: "Control diario de personal de turno",
 };
 
 import { LoadingProvider } from "@/components/LoadingContext";

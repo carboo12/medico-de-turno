@@ -221,7 +221,7 @@ export default function ReportHistory({ reports = [], medicos = [], unidades = [
                     <div>
                       <p className="text-lg font-bold text-gray-800">¡Excelente cobertura!</p>
                       <p className="text-sm text-gray-500 mt-1">
-                        Las {totalUnits} unidades han reportado médico de turno hoy.
+                        Las {totalUnits} unidades han reportado personal de turno hoy.
                       </p>
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function ReportHistory({ reports = [], medicos = [], unidades = [
               <div className="flex items-center justify-between border-b p-6">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">
-                    Médicos de Turno: {format(new Date(viewingDate + 'T12:00:00'), 'PPP', { locale: es })}
+                    Personal de Turno: {format(new Date(viewingDate + 'T12:00:00'), 'PPP', { locale: es })}
                   </h3>
                   <p className="text-sm text-gray-500">Detalles del personal reportado para esta fecha</p>
                 </div>
@@ -402,7 +402,9 @@ export default function ReportHistory({ reports = [], medicos = [], unidades = [
                           <div className="flex items-center justify-between">
                             <p className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors uppercase text-sm">{d.medico.nombre}</p>
                             <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
-                              d.medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'
+                              d.medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-600' :
+                              d.medico.tipo === 'ENFERMERIA' ? 'bg-emerald-100 text-emerald-600' :
+                              'bg-blue-100 text-blue-600'
                             }`}>
                               {d.medico.tipo || 'GENERAL'}
                             </span>

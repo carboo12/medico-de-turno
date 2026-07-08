@@ -127,7 +127,7 @@ export default function ReporteDuplicadosPage() {
             </div>
             <div className="flex-1 text-center md:text-left">
                 <h2 className="text-lg font-black text-red-900 uppercase">Detección de Registros Duplicados</h2>
-                <p className="text-sm text-red-700 font-medium">Este reporte identifica automáticamente a los médicos que comparten el mismo nombre o número telefónico. Revise estos casos para mantener la integridad de los datos.</p>
+                <p className="text-sm text-red-700 font-medium">Este reporte identifica automáticamente al personal que comparte el mismo nombre o número telefónico. Revise estos casos para mantener la integridad de los datos.</p>
             </div>
             <div className="bg-white rounded-xl px-6 py-3 border border-red-200 shadow-sm text-center">
                 <p className="text-[10px] font-black text-red-400 uppercase tracking-widest">Total Duplicados</p>
@@ -237,7 +237,9 @@ export default function ReporteDuplicadosPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-black ${
-                          medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                          medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' :
+                          medico.tipo === 'ENFERMERIA' ? 'bg-emerald-100 text-emerald-700' :
+                          'bg-blue-100 text-blue-700'
                         }`}>
                           <Tag size={10} className="print:hidden" />
                           {medico.tipo || 'GENERAL'}

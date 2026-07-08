@@ -32,7 +32,7 @@ export default function LoginForm() {
             <Stethoscope size={32} />
           </div>
           <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">SNC Medic</h1>
-          <p className="mt-2 text-sm text-gray-600">Control Diario de Turnos Médicos</p>
+          <p className="mt-2 text-sm text-gray-600">Control Diario de Personal de Turno</p>
         </div>
 
         <form action={action} className="mt-8 space-y-6">

@@ -6,7 +6,7 @@ export function generateMedicoTemplate() {
       'Nombre Completo': 'Dr. Ejemplo Pérez',
       'Teléfono': '8888-8888',
       'Municipio / Unidad': 'Hospital Central',
-      'Tipo (GENERAL/SOCIAL)': 'GENERAL'
+      'Tipo (GENERAL/SOCIAL/ENFERMERIA)': 'GENERAL'
     }
   ])
   const wb = XLSX.utils.book_new()
@@ -34,7 +34,7 @@ export async function parseMedicoExcel(file: File): Promise<any[]> {
           nombre: row['Nombre Completo'] || row['Nombre'] || row['nombre'],
           telefono: String(row['Teléfono'] || row['Telefono'] || row['telefono'] || ''),
           municipio_unidad: row['Municipio / Unidad'] || row['Unidad'] || row['municipio_unidad'],
-          tipo: String(row['Tipo (GENERAL/SOCIAL)'] || row['Tipo'] || row['tipo'] || 'GENERAL').toUpperCase().trim()
+          tipo: String(row['Tipo (GENERAL/SOCIAL/ENFERMERIA)'] || row['Tipo'] || row['tipo'] || 'GENERAL').toUpperCase().trim()
         }))
 
         // Filter out empty rows

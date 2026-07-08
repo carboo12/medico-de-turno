@@ -42,6 +42,7 @@ async function main() {
     { nombre: 'Dr. Juan Pérez', telefono: '555-0101', unidad_id: unidadRecords['CHICHIGALPA'], tipo: 'GENERAL' },
     { nombre: 'Dra. María García', telefono: '555-0102', unidad_id: unidadRecords['CORINTO'], tipo: 'SOCIAL' },
     { nombre: 'Dr. Carlos Ruiz', telefono: '555-0103', unidad_id: unidadRecords['SOMOTILLO'], tipo: 'GENERAL' },
+    { nombre: 'Lic. Ana Martínez', telefono: '555-0104', unidad_id: unidadRecords['EL VIEJO NORTE'], tipo: 'ENFERMERIA' },
   ]
 
   for (const medico of medicos) {

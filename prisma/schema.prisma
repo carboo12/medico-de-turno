@@ -19,7 +19,7 @@ model CatalogoMedico {
   id              Int              @id @default(autoincrement())
   nombre          String
   telefono        String?
-  tipo            String           @default("GENERAL")
+  tipo            String           @default("GENERAL") // Valores: GENERAL, SOCIAL, ENFERMERIA
   unidad_id       Int
   unidad          Unidad           @relation(fields: [unidad_id], references: [id])
   detalles        ReporteDetalle[]

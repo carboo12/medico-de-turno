@@ -26,7 +26,7 @@ export default async function MedicosPage() {
             </Link>
             <div>
               <h1 className="text-xl font-bold tracking-tight text-gray-900">SNC Medic</h1>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Gestión de Médicos</p>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Gestión de Personal</p>
             </div>
           </div>
           

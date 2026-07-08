@@ -84,7 +84,7 @@ export default function ReportesPage() {
     const dataToExport = reports.flatMap(report => 
       report.detalles.map((d: any) => ({
         'FECHA TURNO': format(new Date(report.fecha), 'dd/MM/yyyy'),
-        'MÉDICO': d.medico.nombre,
+        'MÉDICO / LIC. ENFERMERÍA': d.medico.nombre,
         'TELÉFONO': d.medico.telefono || 'S/T',
         'MUNICIPIO / UNIDAD': d.medico.unidad.nombre,
         'TIPO': d.medico.tipo || 'GENERAL',
@@ -141,7 +141,7 @@ export default function ReportesPage() {
           <div className="flex justify-between items-end">
             <div>
               <h1 className="text-3xl font-black text-blue-900 leading-none">SNC SILAIS CHINADEGA</h1>
-              <p className="text-md font-bold text-gray-500 uppercase tracking-widest mt-1">REPORTE DE MEDICO DE TURNO</p>
+              <p className="text-md font-bold text-gray-500 uppercase tracking-widest mt-1">REPORTE DE PERSONAL DE TURNO</p>
             </div>
             <div className="text-right text-xs font-semibold text-gray-400">
               <p>FECHA: {format(new Date(), 'dd/MM/yyyy')}</p>
@@ -372,7 +372,7 @@ export default function ReportesPage() {
               <thead className="bg-gray-50 text-xs font-bold uppercase text-gray-500 print:bg-white print:border-b-2">
                 <tr>
                   <th className="px-6 py-4">Fecha Turno</th>
-                  <th className="px-6 py-4">Médico</th>
+                  <th className="px-6 py-4">Médico / Lic. Enfermería</th>
                   <th className="px-6 py-4">Municipio / Unidad</th>
                   <th className="px-6 py-4">Operador</th>
                 </tr>
@@ -413,7 +413,7 @@ export default function ReportesPage() {
           
           {/* Print-only Footer */}
           <div className="hidden print:block mt-8 text-center text-[10px] text-gray-400">
-            SNC SILAIS CHINADEGA - Sistema de Gestión de Médicos de Turno
+            SNC SILAIS CHINADEGA - Sistema de Gestión de Personal de Turno
           </div>
         </section>
       </main>

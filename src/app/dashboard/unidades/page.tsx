@@ -32,13 +32,13 @@ export default async function UnidadesPage() {
               href="/dashboard/medicos"
               className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors"
             >
-              Médicos
+              Personal
             </Link>
             <Link 
               href="/dashboard/reporte-medicos"
               className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors"
             >
-              Reporte Personal
+              Catálogo Personal
             </Link>
             <Link 
               href="/dashboard"

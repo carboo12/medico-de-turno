@@ -42,7 +42,7 @@ export async function createReport(data: { fecha: string; medicos: number[] }): 
       return padre
     })
 
-    await logAction('CREAR_REPORTE', `Creó reporte ID: ${result.id} con ${data.medicos.length} médicos`)
+    await logAction('CREAR_REPORTE', `Creó reporte ID: ${result.id} con ${data.medicos.length} personas`)
     revalidatePath('/dashboard')
     return { success: true, id: result.id }
   } catch (error) {
@@ -180,6 +180,7 @@ export async function createUnidad(nombre: string) {
       data: { nombre: nombre.trim().toUpperCase() }
     })
     await logAction('CREAR_UNIDAD', `Creó unidad: ${unidad.nombre}`)
+    revalidatePath('/dashboard')
     revalidatePath('/dashboard/unidades')
     revalidatePath('/dashboard/medicos')
     return { success: true, data: unidad }
@@ -198,6 +199,7 @@ export async function updateUnidad(id: number, nombre: string) {
       data: { nombre: nombre.trim().toUpperCase() }
     })
     await logAction('EDITAR_UNIDAD', `Editó unidad ID: ${id} a ${unidad.nombre}`)
+    revalidatePath('/dashboard')
     revalidatePath('/dashboard/unidades')
     revalidatePath('/dashboard/medicos')
     return { success: true, data: unidad }
@@ -217,13 +219,14 @@ export async function deleteUnidad(id: number) {
     })
 
     if (count > 0) {
-      return { success: false, error: `No se puede eliminar: tiene ${count} médicos asignados.` }
+      return { success: false, error: `No se puede eliminar: tiene ${count} personas asignadas.` }
     }
 
     const unidad = await prisma.unidad.delete({
       where: { id }
     })
     await logAction('ELIMINAR_UNIDAD', `Eliminó unidad: ${unidad.nombre}`)
+    revalidatePath('/dashboard')
     revalidatePath('/dashboard/unidades')
     revalidatePath('/dashboard/medicos')
     return { success: true }
@@ -266,7 +269,7 @@ export async function createMedico(data: { nombre: string; telefono?: string; un
       },
       include: { unidad: true }
     })
-    await logAction('CREAR_MEDICO', `Creó médico: ${medico.nombre}`)
+    await logAction('CREAR_MEDICO', `Creó personal: ${medico.nombre}`)
     revalidatePath('/dashboard/medicos')
     return { success: true, data: medico }
   } catch (error) {
@@ -290,7 +293,7 @@ export async function updateMedico(id: number, data: { nombre: string; telefono?
       },
       include: { unidad: true }
     })
-    await logAction('EDITAR_MEDICO', `Editó médico ID: ${id} (${medico.nombre})`)
+    await logAction('EDITAR_MEDICO', `Editó personal ID: ${id} (${medico.nombre})`)
     revalidatePath('/dashboard/medicos')
     return { success: true, data: medico }
   } catch (error) {
@@ -306,11 +309,11 @@ export async function deleteMedico(id: number) {
     const medico = await prisma.catalogoMedico.delete({
       where: { id }
     })
-    await logAction('ELIMINAR_MEDICO', `Eliminó médico: ${medico.nombre}`)
+    await logAction('ELIMINAR_MEDICO', `Eliminó personal: ${medico.nombre}`)
     revalidatePath('/dashboard/medicos')
     return { success: true }
   } catch (error) {
-    return { success: false, error: 'No se puede eliminar el médico porque tiene reportes asociados' }
+    return { success: false, error: 'No se puede eliminar el personal porque tiene reportes asociados' }
   }
 }
 
@@ -364,7 +367,7 @@ export async function importMedicos(data: { nombre: string; telefono: string; mu
       data: newData,
     })
 
-    await logAction('IMPORTAR_MEDICOS', `Importó masivamente ${result.count} médicos desde Excel. Omitidos: ${skipped.length}`)
+    await logAction('IMPORTAR_MEDICOS', `Importó masivamente ${result.count} registros desde Excel. Omitidos: ${skipped.length}`)
     revalidatePath('/dashboard/medicos')
     return { success: true, count: result.count, skippedCount: skipped.length }
   } catch (error) {

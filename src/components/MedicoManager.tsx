@@ -111,10 +111,10 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
         return
       }
 
-      if (confirm(`Se importarán ${data.length} médicos. ¿Desea continuar?`)) {
+      if (confirm(`Se importarán ${data.length} registros. ¿Desea continuar?`)) {
         const result = await importMedicos(data)
         if (result.success) {
-          let msg = `Importación completada: ${result.count} médicos añadidos.`
+          let msg = `Importación completada: ${result.count} registros añadidos.`
           if (result.skippedCount && result.skippedCount > 0) {
             msg += `\n${result.skippedCount} registros fueron omitidos (duplicados o unidad no encontrada).`
           }
@@ -179,7 +179,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('¿Está seguro de eliminar este médico?')) return
+    if (!confirm('¿Está seguro de eliminar este registro?')) return
     
     const result = await deleteMedico(id)
     if (result.success) {
@@ -193,14 +193,14 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Catálogo de Médicos</h2>
-          <p className="text-sm text-gray-500">Gestione la lista de personal disponible</p>
+          <h2 className="text-2xl font-bold text-gray-900">Catálogo de Personal</h2>
+          <p className="text-sm text-gray-500">Gestione la lista de médicos y licenciados en enfermería</p>
           <Link href="/dashboard/unidades" className="text-xs font-medium text-blue-600 hover:underline flex items-center gap-1 mt-1">
             <Building2 size={12} /> Gestionar Unidades / Municipios
           </Link>
           {medicosSinTelefono > 0 && (
             <div className="mt-2 flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700 ring-1 ring-amber-500/20">
-              <AlertCircle size={14} /> Atencion: Hay {medicosSinTelefono} médicos sin número telefónico.
+              <AlertCircle size={14} /> Atencion: Hay {medicosSinTelefono} registros sin número telefónico.
             </div>
           )}
         </div>
@@ -208,7 +208,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
           {/* Filtro Sin Teléfono */}
           <button
             onClick={() => setFilterSinTelefono(f => !f)}
-            title={filterSinTelefono ? 'Mostrando solo médicos sin teléfono. Clic para ver todos.' : 'Filtrar solo médicos sin teléfono'}
+            title={filterSinTelefono ? 'Mostrando solo registros sin teléfono. Clic para ver todos.' : 'Filtrar solo registros sin teléfono'}
             className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold shadow-sm transition-all ${
               filterSinTelefono
                 ? 'bg-red-600 border-red-600 text-white hover:bg-red-700 ring-2 ring-red-300'
@@ -252,7 +252,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
             className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
           >
             <Plus size={18} />
-            Nuevo Médico
+            Nuevo Personal
           </button>
         </div>
       </div>
@@ -262,7 +262,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
         <div className="flex items-center justify-between rounded-xl bg-red-50 border border-red-200 px-4 py-3">
           <div className="flex items-center gap-2 text-sm font-bold text-red-700">
             <Filter size={16} />
-            Filtro activo: mostrando {sortedMedicos.length} médico{sortedMedicos.length !== 1 ? 's' : ''} sin teléfono registrado
+            Filtro activo: mostrando {sortedMedicos.length} registro{sortedMedicos.length !== 1 ? 's' : ''} sin teléfono
           </div>
           <button
             onClick={() => setFilterSinTelefono(false)}
@@ -287,8 +287,8 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
           <tbody className="divide-y divide-gray-200 bg-white">
             {sortedMedicos.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-10 text-center text-sm text-gray-500">
-                  No hay médicos registrados.
+                  <td colSpan={5} className="px-6 py-10 text-center text-sm text-gray-500">
+                  No hay personal registrado en el catálogo.
                 </td>
               </tr>
             ) : (
@@ -305,7 +305,9 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm">
                         <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                          medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                          medico.tipo === 'SOCIAL' ? 'bg-purple-100 text-purple-700' :
+                          medico.tipo === 'ENFERMERIA' ? 'bg-emerald-100 text-emerald-700' :
+                          'bg-blue-100 text-blue-700'
                         }`}>
                           {medico.tipo || 'GENERAL'}
                         </span>
@@ -345,7 +347,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">
-                {editingMedico ? 'Editar Médico' : 'Nuevo Médico'}
+                {editingMedico ? 'Editar Personal' : 'Nuevo Personal'}
               </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600">
                 <X size={20} />
@@ -388,7 +390,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Tipo de Médico</label>
+                <label className="block text-sm font-medium text-gray-700">Tipo de Personal</label>
                 <select
                   required
                   className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
@@ -397,6 +399,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
                 >
                   <option value="GENERAL">MÉDICO GENERAL</option>
                   <option value="SOCIAL">MÉDICO SOCIAL</option>
+                  <option value="ENFERMERIA">LIC. ENFERMERÍA</option>
                 </select>
               </div>
 
@@ -416,7 +419,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
                   className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 disabled:opacity-50"
                 >
                   {loading ? <Loader2 className="animate-spin" size={18} /> : <Check size={18} />}
-                  {editingMedico ? 'Guardar Cambios' : 'Crear Médico'}
+                  {editingMedico ? 'Guardar Cambios' : 'Crear Personal'}
                 </button>
               </div>
             </form>
@@ -433,7 +436,7 @@ export default function MedicoManager({ initialMedicos, unidades }: { initialMed
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-2 uppercase">¡Atención Crítica!</h3>
               <p className="text-gray-600 mb-6 font-medium">
-                Se han detectado <span className="text-red-600 font-bold text-xl">{medicosSinTelefono}</span> médicos que <span className="font-bold underline text-red-600">no tienen número de teléfono</span> registrado.
+                Se han detectado <span className="text-red-600 font-bold text-xl">{medicosSinTelefono}</span> registros que <span className="font-bold underline text-red-600">no tienen número de teléfono</span>.
               </p>
               <button
                 onClick={() => setShowWarningModal(false)}

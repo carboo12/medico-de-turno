@@ -11,6 +11,7 @@ import Link from 'next/link'
 
 interface Props {
   medicos: (CatalogoMedico & { unidad: { nombre: string } })[]
+  unidades?: { id: number; nombre: string; _count?: { medicos: number } }[]
   initialData?: {
     id: number
     fecha: string
@@ -20,7 +21,7 @@ interface Props {
   onCancel?: () => void
 }
 
-export default function ReportForm({ medicos, initialData, onSuccess, onCancel }: Props) {
+export default function ReportForm({ medicos, unidades = [], initialData, onSuccess, onCancel }: Props) {
   const [selectedIds, setSelectedIds] = useState<number[]>(initialData?.medicos || [])
   const [searchTerm, setSearchTerm] = useState('')
   const [municipioFilter, setMunicipioFilter] = useState('')
@@ -30,7 +31,9 @@ export default function ReportForm({ medicos, initialData, onSuccess, onCancel }
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
 
-  const municipios = Array.from(new Set(medicos.map(m => m.unidad.nombre))).sort()
+  const municipios = unidades.length > 0
+    ? unidades.map(u => u.nombre).sort()
+    : Array.from(new Set(medicos.map(m => m.unidad.nombre))).sort()
 
   const filteredMedicos = medicos.filter(m => {
     const matchesSearch = m.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -54,7 +57,7 @@ export default function ReportForm({ medicos, initialData, onSuccess, onCancel }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (selectedIds.length === 0) {
-      setMessage({ type: 'error', text: 'Debe seleccionar al menos un médico' })
+      setMessage({ type: 'error', text: 'Debe seleccionar al menos una persona de turno' })
       return
     }
 
@@ -139,7 +142,7 @@ export default function ReportForm({ medicos, initialData, onSuccess, onCancel }
 
         <div className="space-y-2">
           <label className="flex justify-between text-sm font-semibold text-gray-700">
-            <span>Seleccionar Médicos</span>
+            <span>Seleccionar Personal de Turno</span>
             <span className="text-blue-600">{selectedIds.length} seleccionados</span>
           </label>
           
@@ -170,12 +173,12 @@ export default function ReportForm({ medicos, initialData, onSuccess, onCancel }
               ))}
               {medicos.length === 0 && (
                 <div className="col-span-full py-12 text-center">
-                  <p className="text-sm text-gray-500 mb-4">No hay médicos registrados en el sistema.</p>
+                  <p className="text-sm text-gray-500 mb-4">No hay personal registrado en el sistema.</p>
                   <Link 
                     href="/dashboard/medicos"
                     className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
                   >
-                    Ir a Registrar Médicos
+                    Ir a Registrar Personal
                   </Link>
                 </div>
               )}
